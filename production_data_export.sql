@@ -11,6 +11,12 @@
 -- 
 -- ============================================
 
+-- Grant Admin Access to beat.random@gmail.com
+-- This must be run first, or after the user logs in once
+UPDATE users 
+SET is_admin = true 
+WHERE email = 'beat.random@gmail.com';
+
 -- Insert Reviews (3 reviews)
 INSERT INTO reviews (id, quote, author, "order", created_at) VALUES
 ('b2b81ba9-7136-41e6-9fcd-25454b7d807f', 'An extraordinary talent with a voice that transcends time.', 'Opera Magazine', 1, '2025-10-18 11:54:08.249055'),
