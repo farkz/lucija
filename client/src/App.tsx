@@ -14,6 +14,7 @@ import AdminEvents from "@/pages/admin/AdminEvents";
 import AdminVideos from "@/pages/admin/AdminVideos";
 import AdminBlog from "@/pages/admin/AdminBlog";
 import AdminAbout from "@/pages/admin/AdminAbout";
+import AdminRepertoire from "@/pages/admin/AdminRepertoire";
 
 function Router() {
   return (
@@ -27,6 +28,7 @@ function Router() {
       <Route path="/admin/videos" component={AdminVideos} />
       <Route path="/admin/blog" component={AdminBlog} />
       <Route path="/admin/about" component={AdminAbout} />
+      <Route path="/admin/repertoire" component={AdminRepertoire} />
       <Route component={NotFound} />
     </Switch>
   );

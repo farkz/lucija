@@ -146,14 +146,9 @@ export type AboutContent = typeof aboutContent.$inferSelect;
 export const repertoireItems = pgTable("repertoire_items", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   category: varchar("category").notNull(), // 'opera_role', 'concert_work', 'conductor', 'orchestra', 'venue'
-  role: text("role"), // For opera roles
-  workName: text("work_name"), // For concert works or opera name
-  composer: text("composer"),
-  conductor: text("conductor"), // For concert works
-  ensemble: text("ensemble"), // Orchestra/ensemble for concert works
-  venue: text("venue"),
-  season: text("season"), // For opera roles
-  order: integer("order").notNull().default(0),
+  title: text("title").notNull(),
+  subtitle: text("subtitle"),
+  order: varchar("order").notNull().default("0"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

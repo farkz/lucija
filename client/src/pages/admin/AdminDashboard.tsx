@@ -8,6 +8,7 @@ import {
   Video, 
   FileText, 
   User as UserIcon,
+  Music,
   ArrowLeft 
 } from "lucide-react";
 import type { User } from "@shared/schema";
@@ -98,6 +99,13 @@ export default function AdminDashboard() {
       icon: UserIcon,
       href: "/admin/about",
       testId: "link-admin-about"
+    },
+    {
+      title: "Repertoire",
+      description: "Manage opera roles, concert works, and performance history",
+      icon: Music,
+      href: "/admin/repertoire",
+      testId: "link-admin-repertoire"
     }
   ];
 
