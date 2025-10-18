@@ -11,11 +11,15 @@
 -- 
 -- ============================================
 
--- Grant Admin Access to beat.random@gmail.com
--- This must be run first, or after the user logs in once
+-- Grant Admin Access
+-- These must be run after the users log in at least once
 UPDATE users 
 SET is_admin = true 
 WHERE email = 'beat.random@gmail.com';
+
+UPDATE users 
+SET is_admin = true 
+WHERE email = 'elucija@hotmail.com';
 
 -- Insert Reviews (3 reviews)
 INSERT INTO reviews (id, quote, author, "order", created_at) VALUES
