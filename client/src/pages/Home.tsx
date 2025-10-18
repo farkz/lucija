@@ -8,7 +8,7 @@ import EventsSection from "@/components/EventsSection";
 import YouTubeGallery, { type YouTubeVideo } from "@/components/YouTubeGallery";
 import BlogSection, { type BlogPost } from "@/components/BlogSection";
 import ImageModal from "@/components/ImageModal";
-import heroImage from "@assets/generated_images/Opera_singer_portrait_photo_505a6c64.png";
+import heroImage from "@assets/lu_1760791781256.jpg";
 
 interface Review {
   id: string;
