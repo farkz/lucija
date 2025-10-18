@@ -141,3 +141,25 @@ export const insertAboutContentSchema = createInsertSchema(aboutContent).omit({
 });
 export type InsertAboutContent = z.infer<typeof insertAboutContentSchema>;
 export type AboutContent = typeof aboutContent.$inferSelect;
+
+// Repertoire items table
+export const repertoireItems = pgTable("repertoire_items", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  category: varchar("category").notNull(), // 'opera_role', 'concert_work', 'conductor', 'orchestra', 'venue'
+  role: text("role"), // For opera roles
+  workName: text("work_name"), // For concert works or opera name
+  composer: text("composer"),
+  conductor: text("conductor"), // For concert works
+  ensemble: text("ensemble"), // Orchestra/ensemble for concert works
+  venue: text("venue"),
+  season: text("season"), // For opera roles
+  order: integer("order").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertRepertoireItemSchema = createInsertSchema(repertoireItems).omit({
+  id: true,
+  createdAt: true,
+});
+export type InsertRepertoireItem = z.infer<typeof insertRepertoireItemSchema>;
+export type RepertoireItem = typeof repertoireItems.$inferSelect;
