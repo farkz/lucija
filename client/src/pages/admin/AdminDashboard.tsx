@@ -23,14 +23,39 @@ export default function AdminDashboard() {
     );
   }
 
-  if (!user || !user.isAdmin) {
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Card className="max-w-md">
+          <CardHeader>
+            <CardTitle>Login Required</CardTitle>
+            <CardDescription className="mb-4">
+              Please sign in to access the admin panel.
+            </CardDescription>
+          </CardHeader>
+          <div className="px-6 pb-6">
+            <Button 
+              onClick={() => window.location.href = "/api/login"}
+              className="w-full"
+              data-testid="button-login"
+            >
+              Sign in with Replit
+            </Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!user.isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
             <CardTitle>Access Denied</CardTitle>
             <CardDescription>
-              You need admin privileges to access this page.
+              You are logged in as {user.email}, but you need admin privileges to access this page.
+              Please contact the site administrator.
             </CardDescription>
           </CardHeader>
         </Card>
