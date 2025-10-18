@@ -4,6 +4,7 @@
  */
 
 import type { Event, BlogPost, YoutubeVideo } from "@shared/schema";
+import { Helmet } from "react-helmet-async";
 
 /**
  * Normalize date to ISO string format
@@ -319,9 +320,10 @@ export function generateRepertoireSchema() {
  */
 export function StructuredData({ data }: { data: Record<string, any> }) {
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
+    <Helmet>
+      <script type="application/ld+json">
+        {JSON.stringify(data)}
+      </script>
+    </Helmet>
   );
 }

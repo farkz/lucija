@@ -47,7 +47,7 @@ export default function BlogPost() {
   }
 
   const excerpt = post.excerpt || post.content.substring(0, 160);
-  const ogImage = post.imageUrl || "https://lucijaercegovac.com/og-image.jpg";
+  const ogImage = post.imageUrl || "/og-image.jpg";
 
   return (
     <div className="min-h-screen">
@@ -58,7 +58,6 @@ export default function BlogPost() {
         ogTitle={post.title}
         ogDescription={excerpt}
         ogImage={ogImage}
-        ogUrl={`https://lucijaercegovac.com/blog/${post.id}`}
       />
       
       {/* Structured Data for SEO */}

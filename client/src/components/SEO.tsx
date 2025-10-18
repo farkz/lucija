@@ -17,10 +17,14 @@ export default function SEO({
   keywords = "Lucija Ercegovac, mezzo-soprano, opera singer, Croatian opera, Opera Bern, Tonhalle Zürich, Wagner, Mozart, Verdi, Puccini, classical music Switzerland, opera performances",
   ogTitle,
   ogDescription,
-  ogImage = "https://lucijaercegovac.com/og-image.jpg",
-  ogUrl = "https://lucijaercegovac.com",
+  ogImage = "/og-image.jpg",
+  ogUrl,
   twitterCard = "summary_large_image"
 }: SEOProps) {
+  const baseUrl = import.meta.env.PROD ? "https://lucijaercegovac.com" : window.location.origin;
+  const fullOgUrl = ogUrl || baseUrl;
+  const fullOgImage = ogImage.startsWith('http') ? ogImage : `${baseUrl}${ogImage}`;
+  
   return (
     <Helmet>
       <title>{title}</title>
@@ -31,14 +35,14 @@ export default function SEO({
       <meta property="og:title" content={ogTitle || title} />
       <meta property="og:description" content={ogDescription || description} />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={ogUrl} />
-      <meta property="og:image" content={ogImage} />
+      <meta property="og:url" content={fullOgUrl} />
+      <meta property="og:image" content={fullOgImage} />
       
       {/* Twitter Card */}
       <meta name="twitter:card" content={twitterCard} />
       <meta name="twitter:title" content={ogTitle || title} />
       <meta name="twitter:description" content={ogDescription || description} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={fullOgImage} />
     </Helmet>
   );
 }

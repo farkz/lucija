@@ -169,7 +169,6 @@ export default function Repertoire() {
         keywords="Lucija Ercegovac repertoire, opera roles, Wagner Walküre, Mozart Zauberflöte, mezzo-soprano performances, Paavo Järvi, Jonathan Nott, Jordi Savall, Tonhalle-Orchester Zürich, Opera Bern"
         ogTitle="Repertoire - Lucija Ercegovac Mezzo-Soprano"
         ogDescription="Opera roles and concert performances by Croatian mezzo-soprano Lucija Ercegovac. Collaborations with world-renowned conductors and orchestras."
-        ogUrl="https://lucijaercegovac.com/repertoire"
       />
       
       {/* Structured Data for Repertoire */}
