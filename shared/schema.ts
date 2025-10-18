@@ -148,7 +148,7 @@ export const repertoireItems = pgTable("repertoire_items", {
   category: varchar("category").notNull(), // 'opera_role', 'concert_work', 'conductor', 'orchestra', 'venue'
   title: text("title").notNull(),
   subtitle: text("subtitle"),
-  order: varchar("order").notNull().default("0"),
+  order: integer("order").notNull().default(0),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

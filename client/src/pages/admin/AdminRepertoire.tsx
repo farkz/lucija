@@ -39,7 +39,7 @@ export default function AdminRepertoire() {
   });
 
   const createMutation = useMutation({
-    mutationFn: async (data: { title: string; subtitle?: string; category: string; order: string }) => {
+    mutationFn: async (data: { title: string; subtitle?: string; category: string; order: number }) => {
       await apiRequest("POST", "/api/admin/repertoire", data);
     },
     onSuccess: () => {
@@ -69,7 +69,7 @@ export default function AdminRepertoire() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async ({ id, data }: { id: string; data: { title: string; subtitle?: string; category: string; order: string } }) => {
+    mutationFn: async ({ id, data }: { id: string; data: { title: string; subtitle?: string; category: string; order: number } }) => {
       await apiRequest("PUT", `/api/admin/repertoire/${id}`, data);
     },
     onSuccess: () => {
@@ -141,7 +141,7 @@ export default function AdminRepertoire() {
     setTitle(item.title);
     setSubtitle(item.subtitle || "");
     setCategory(item.category);
-    setOrder(item.order);
+    setOrder(item.order.toString());
     setIsDialogOpen(true);
   };
 
@@ -155,11 +155,31 @@ export default function AdminRepertoire() {
       return;
     }
 
+    // Strict validation: must be a whole number with no decimals or scientific notation
+    if (!/^\d+$/.test(order.trim())) {
+      toast({
+        title: "Validation Error",
+        description: "Order must be a positive whole number.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const orderNum = parseInt(order, 10);
+    if (isNaN(orderNum) || orderNum < 0) {
+      toast({
+        title: "Validation Error",
+        description: "Order must be a valid positive number.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const data = {
       title,
       subtitle: subtitle.trim() || undefined,
       category,
-      order,
+      order: orderNum,
     };
 
     if (editingItem) {
@@ -317,7 +337,7 @@ export default function AdminRepertoire() {
                         </TableHeader>
                         <TableBody>
                           {categoryItems
-                            .sort((a, b) => parseInt(a.order) - parseInt(b.order))
+                            .sort((a, b) => a.order - b.order)
                             .map((item) => (
                               <TableRow key={item.id} data-testid={`row-item-${item.id}`}>
                                 <TableCell className="font-medium">{item.order}</TableCell>

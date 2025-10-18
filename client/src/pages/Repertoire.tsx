@@ -3,163 +3,31 @@ import MobileMenu from "@/components/MobileMenu";
 import SEO from "@/components/SEO";
 import { StructuredData, generateRepertoireSchema } from "@/lib/structuredData";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import type { RepertoireItem } from "@shared/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 export default function Repertoire() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const operaRoles = [
-    {
-      role: "Pauline",
-      opera: "La vie parisienne",
-      composer: "Offenbach",
-      venue: "Bühnen Bern",
-      season: "2024/25"
-    },
-    {
-      role: "Rossweisse",
-      opera: "Die Walküre",
-      composer: "Wagner",
-      venue: "Opera Bern",
-      season: "2022/23"
-    },
-    {
-      role: "Zweite Dame",
-      opera: "Die Zauberflöte",
-      composer: "Mozart",
-      venue: "Opera Bern",
-      season: "2022/23"
-    },
-    {
-      role: "Laura",
-      opera: "Iolanta",
-      composer: "Tchaikovsky",
-      venue: "Opera Bern",
-      season: "2022/23"
-    },
-    {
-      role: "La chatte / l'écureuil / un pâtre",
-      opera: "L'Enfant et les sortilèges",
-      composer: "Ravel",
-      venue: "Opera Bern",
-      season: "2022/23"
-    },
-    {
-      role: "Zweite Priesterin / Femme Grecque",
-      opera: "Iphigénie en Tauride",
-      composer: "Gluck",
-      venue: "Opera Bern",
-      season: "2022/23"
-    },
-    {
-      role: "Third Boy",
-      opera: "Die Zauberflöte",
-      composer: "Mozart",
-      venue: "Croatian National Theatre",
-      season: "Earlier career"
-    },
-    {
-      role: "Madame de la Haltière",
-      opera: "Cendrillon",
-      composer: "Massenet",
-      venue: "Music Academy Zagreb",
-      season: "Earlier career"
+  const { data: repertoireItems = [], isLoading } = useQuery<RepertoireItem[]>({
+    queryKey: ["/api/repertoire"],
+  });
+
+  const groupedItems = repertoireItems.reduce((acc, item) => {
+    if (!acc[item.category]) {
+      acc[item.category] = [];
     }
-  ];
+    acc[item.category].push(item);
+    return acc;
+  }, {} as Record<string, RepertoireItem[]>);
 
-  const concertRepertoire = [
-    {
-      work: "Symphony No. 9",
-      composer: "Beethoven",
-      conductor: "Jonathan Nott",
-      ensemble: "Orchestre de la Suisse Romande",
-      venue: "Victoria Hall Geneva"
-    },
-    {
-      work: "Carmina Burana",
-      composer: "Orff",
-      conductor: "Paavo Järvi",
-      ensemble: "Tonhalle-Orchester Zürich",
-      venue: "Tonhalle Zürich"
-    },
-    {
-      work: "Ein deutsches Requiem",
-      composer: "Brahms",
-      conductor: "Florian Helgath",
-      ensemble: "Orchestra La Scintilla",
-      venue: "Tonhalle Zürich"
-    },
-    {
-      work: "A Midsummer Night's Dream",
-      composer: "Mendelssohn",
-      conductor: "Jordi Savall",
-      ensemble: "La Capella Nacional de Catalunya, Le Concert des Nations",
-      venue: "European Tour"
-    },
-    {
-      work: "Les noces",
-      composer: "Stravinsky",
-      conductor: "Sebastian Schwab",
-      ensemble: "Zürcher Sing Akademie",
-      venue: "Opernhaus Zürich"
-    },
-    {
-      work: "Isis",
-      composer: "George Enescu",
-      conductor: "Peter Ruzicka",
-      ensemble: "Tonhalle-Orchester Zürich",
-      venue: "Tonhalle Zürich"
-    },
-    {
-      work: "Rossini Gala (Tancredi, Il barbiere di Siviglia)",
-      composer: "Rossini",
-      conductor: "Jakob Lehman",
-      ensemble: "La Banda Storica",
-      venue: "Various venues"
-    },
-    {
-      work: "Various concert repertoire",
-      composer: "Bach, Telemann, Charpentier, Mahler, Debussy, Berio",
-      conductor: "Philippe Herreweghe, Peter Kooij",
-      ensemble: "Collegium Vocale Gent",
-      venue: "Various venues"
-    }
-  ];
-
-  const conductors = [
-    "Paavo Järvi",
-    "Jonathan Nott",
-    "Jordi Savall",
-    "Philippe Herreweghe",
-    "Florian Helgath",
-    "Peter Ruzicka",
-    "Sebastian Schwab",
-    "Jakob Lehman",
-    "Peter Kooij"
-  ];
-
-  const orchestras = [
-    "Tonhalle-Orchester Zürich",
-    "Orchestre de la Suisse Romande",
-    "Le Concert des Nations",
-    "La Capella Nacional de Catalunya",
-    "Collegium Vocale Gent",
-    "Orchestra La Scintilla",
-    "Zürcher Sing Akademie",
-    "La Banda Storica",
-    "Zagreb Soloists Chamber Orchestra",
-    "Croatian Radio Choir"
-  ];
-
-  const venues = [
-    "Opera Bern (Bühnen Bern)",
-    "Tonhalle Zürich",
-    "Opernhaus Zürich",
-    "Victoria Hall Geneva",
-    "Croatian National Theatre Zagreb",
-    "Music Academy Zagreb"
-  ];
+  const operaRoles = groupedItems.opera_role || [];
+  const concertRepertoire = groupedItems.concert_work || [];
+  const conductors = groupedItems.conductor || [];
+  const orchestras = groupedItems.orchestra || [];
+  const venues = groupedItems.venue || [];
 
   return (
     <div className="min-h-screen">
@@ -202,37 +70,30 @@ export default function Repertoire() {
             >
               Operatic Roles
             </h2>
-            <div className="grid gap-4 md:grid-cols-2">
-              {operaRoles.map((role, index) => (
-                <Card key={index} data-testid={`card-opera-role-${index}`}>
-                  <CardHeader>
-                    <CardTitle className="text-xl font-medium">
-                      {role.role}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2 text-sm">
-                      <p>
-                        <span className="text-muted-foreground">Opera:</span>{" "}
-                        <span className="font-medium">{role.opera}</span>
-                      </p>
-                      <p>
-                        <span className="text-muted-foreground">Composer:</span>{" "}
-                        {role.composer}
-                      </p>
-                      <p>
-                        <span className="text-muted-foreground">Venue:</span>{" "}
-                        {role.venue}
-                      </p>
-                      <p>
-                        <span className="text-muted-foreground">Season:</span>{" "}
-                        {role.season}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            {isLoading ? (
+              <div className="text-center py-8 text-muted-foreground">Loading repertoire...</div>
+            ) : operaRoles.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">No opera roles available yet.</div>
+            ) : (
+              <div className="grid gap-4 md:grid-cols-2">
+                {operaRoles
+                  .sort((a, b) => a.order - b.order)
+                  .map((item) => (
+                    <Card key={item.id} data-testid={`card-opera-role-${item.id}`}>
+                      <CardHeader>
+                        <CardTitle className="text-xl font-medium">
+                          {item.title}
+                        </CardTitle>
+                      </CardHeader>
+                      {item.subtitle && (
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground">{item.subtitle}</p>
+                        </CardContent>
+                      )}
+                    </Card>
+                  ))}
+              </div>
+            )}
           </section>
 
           <Separator className="my-12" />
@@ -246,41 +107,30 @@ export default function Repertoire() {
             >
               Concert & Oratorio Repertoire
             </h2>
-            <div className="grid gap-4">
-              {concertRepertoire.map((concert, index) => (
-                <Card key={index} data-testid={`card-concert-${index}`}>
-                  <CardHeader>
-                    <CardTitle className="text-xl font-medium">
-                      {concert.work}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div className="space-y-2">
-                        <p>
-                          <span className="text-muted-foreground">Composer:</span>{" "}
-                          {concert.composer}
-                        </p>
-                        <p>
-                          <span className="text-muted-foreground">Conductor:</span>{" "}
-                          {concert.conductor}
-                        </p>
-                      </div>
-                      <div className="space-y-2">
-                        <p>
-                          <span className="text-muted-foreground">Ensemble:</span>{" "}
-                          {concert.ensemble}
-                        </p>
-                        <p>
-                          <span className="text-muted-foreground">Venue:</span>{" "}
-                          {concert.venue}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            {isLoading ? (
+              <div className="text-center py-8 text-muted-foreground">Loading repertoire...</div>
+            ) : concertRepertoire.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">No concert repertoire available yet.</div>
+            ) : (
+              <div className="grid gap-4">
+                {concertRepertoire
+                  .sort((a, b) => a.order - b.order)
+                  .map((item) => (
+                    <Card key={item.id} data-testid={`card-concert-${item.id}`}>
+                      <CardHeader>
+                        <CardTitle className="text-xl font-medium">
+                          {item.title}
+                        </CardTitle>
+                      </CardHeader>
+                      {item.subtitle && (
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground">{item.subtitle}</p>
+                        </CardContent>
+                      )}
+                    </Card>
+                  ))}
+              </div>
+            )}
           </section>
 
           <Separator className="my-12" />
@@ -298,14 +148,22 @@ export default function Repertoire() {
               </h2>
               <Card>
                 <CardContent className="p-6">
-                  <ul className="space-y-2" data-testid="list-conductors">
-                    {conductors.map((conductor, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <span className="text-primary mt-1">•</span>
-                        <span>{conductor}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {isLoading ? (
+                    <div className="text-center py-4 text-muted-foreground">Loading...</div>
+                  ) : conductors.length === 0 ? (
+                    <div className="text-center py-4 text-muted-foreground">No conductors listed yet.</div>
+                  ) : (
+                    <ul className="space-y-2" data-testid="list-conductors">
+                      {conductors
+                        .sort((a, b) => a.order - b.order)
+                        .map((item) => (
+                          <li key={item.id} className="flex items-start gap-2">
+                            <span className="text-primary mt-1">•</span>
+                            <span>{item.title}</span>
+                          </li>
+                        ))}
+                    </ul>
+                  )}
                 </CardContent>
               </Card>
             </section>
@@ -321,14 +179,22 @@ export default function Repertoire() {
               </h2>
               <Card>
                 <CardContent className="p-6">
-                  <ul className="space-y-2" data-testid="list-orchestras">
-                    {orchestras.map((orchestra, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <span className="text-primary mt-1">•</span>
-                        <span>{orchestra}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {isLoading ? (
+                    <div className="text-center py-4 text-muted-foreground">Loading...</div>
+                  ) : orchestras.length === 0 ? (
+                    <div className="text-center py-4 text-muted-foreground">No orchestras listed yet.</div>
+                  ) : (
+                    <ul className="space-y-2" data-testid="list-orchestras">
+                      {orchestras
+                        .sort((a, b) => a.order - b.order)
+                        .map((item) => (
+                          <li key={item.id} className="flex items-start gap-2">
+                            <span className="text-primary mt-1">•</span>
+                            <span>{item.title}</span>
+                          </li>
+                        ))}
+                    </ul>
+                  )}
                 </CardContent>
               </Card>
             </section>
@@ -345,14 +211,22 @@ export default function Repertoire() {
             </h2>
             <Card>
               <CardContent className="p-6">
-                <ul className="grid md:grid-cols-2 gap-x-8 gap-y-2" data-testid="list-venues">
-                  {venues.map((venue, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="text-primary mt-1">•</span>
-                      <span>{venue}</span>
-                    </li>
-                  ))}
-                </ul>
+                {isLoading ? (
+                  <div className="text-center py-4 text-muted-foreground">Loading...</div>
+                ) : venues.length === 0 ? (
+                  <div className="text-center py-4 text-muted-foreground">No venues listed yet.</div>
+                ) : (
+                  <ul className="grid md:grid-cols-2 gap-x-8 gap-y-2" data-testid="list-venues">
+                    {venues
+                      .sort((a, b) => a.order - b.order)
+                      .map((item) => (
+                        <li key={item.id} className="flex items-start gap-2">
+                          <span className="text-primary mt-1">•</span>
+                          <span>{item.title}</span>
+                        </li>
+                      ))}
+                  </ul>
+                )}
               </CardContent>
             </Card>
           </section>
