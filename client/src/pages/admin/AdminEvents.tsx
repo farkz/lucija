@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Switch } from "@/components/ui/switch";
 import { ArrowLeft, Plus, Trash2, Edit, Upload, X } from "lucide-react";
@@ -268,6 +268,9 @@ export default function AdminEvents() {
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto" data-testid="dialog-event">
             <DialogHeader>
               <DialogTitle>{editingEvent ? "Edit Event" : "Add New Event"}</DialogTitle>
+              <DialogDescription>
+                {editingEvent ? "Update the event details below." : "Fill in the details to create a new event."}
+              </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <div>

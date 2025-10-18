@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -142,6 +142,9 @@ export default function AdminReviews() {
             <DialogContent data-testid="dialog-add-review">
               <DialogHeader>
                 <DialogTitle>Add New Review</DialogTitle>
+                <DialogDescription>
+                  Add a press review quote to display on the homepage.
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
                 <div>

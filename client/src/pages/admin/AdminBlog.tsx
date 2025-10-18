@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
@@ -242,6 +242,9 @@ export default function AdminBlog() {
           <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto" data-testid="dialog-post">
             <DialogHeader>
               <DialogTitle>{editingPost ? "Edit Blog Post" : "Add New Blog Post"}</DialogTitle>
+              <DialogDescription>
+                {editingPost ? "Update your blog post content below." : "Create a new blog post with title, content, and optional image."}
+              </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <div>
