@@ -6,7 +6,7 @@ import {
   ObjectStorageService,
   ObjectNotFoundError,
 } from "./objectStorage";
-import { insertReviewSchema, insertEventSchema, insertEventImageSchema, insertYoutubeVideoSchema, insertBlogPostSchema, insertAboutContentSchema } from "@shared/schema";
+import { insertReviewSchema, insertEventSchema, insertEventImageSchema, insertYoutubeVideoSchema, insertBlogPostSchema, insertAboutContentSchema, insertRepertoireItemSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
@@ -180,6 +180,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Repertoire items
+  app.get("/api/repertoire", async (req, res) => {
+    try {
+      const items = await storage.getAllRepertoireItems();
+      res.json(items);
+    } catch (error) {
+      console.error("Error fetching repertoire items:", error);
+      res.status(500).json({ message: "Failed to fetch repertoire items" });
+    }
+  });
+
+  app.get("/api/repertoire/:category", async (req, res) => {
+    try {
+      const items = await storage.getRepertoireItemsByCategory(req.params.category);
+      res.json(items);
+    } catch (error) {
+      console.error("Error fetching repertoire items:", error);
+      res.status(500).json({ message: "Failed to fetch repertoire items" });
+    }
+  });
+
   // Admin routes (authentication + admin role required)
   
   // Reviews admin
@@ -347,6 +368,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating about content:", error);
       res.status(500).json({ message: "Failed to update about content" });
+    }
+  });
+
+  // Repertoire items admin
+  app.get("/api/admin/repertoire", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const items = await storage.getAllRepertoireItems();
+      res.json(items);
+    } catch (error) {
+      console.error("Error fetching repertoire items:", error);
+      res.status(500).json({ message: "Failed to fetch repertoire items" });
+    }
+  });
+
+  app.post("/api/admin/repertoire", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const validatedData = insertRepertoireItemSchema.parse(req.body);
+      const item = await storage.createRepertoireItem(validatedData);
+      res.status(201).json(item);
+    } catch (error) {
+      console.error("Error creating repertoire item:", error);
+      res.status(400).json({ message: "Failed to create repertoire item" });
+    }
+  });
+
+  app.put("/api/admin/repertoire/:id", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const item = await storage.updateRepertoireItem(req.params.id, req.body);
+      res.json(item);
+    } catch (error) {
+      console.error("Error updating repertoire item:", error);
+      res.status(500).json({ message: "Failed to update repertoire item" });
+    }
+  });
+
+  app.delete("/api/admin/repertoire/:id", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      await storage.deleteRepertoireItem(req.params.id);
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting repertoire item:", error);
+      res.status(500).json({ message: "Failed to delete repertoire item" });
     }
   });
 
