@@ -6,6 +6,7 @@ import {
   youtubeVideos,
   blogPosts,
   aboutContent,
+  repertoireItems,
   type User,
   type UpsertUser,
   type Review,
@@ -20,6 +21,8 @@ import {
   type InsertBlogPost,
   type AboutContent,
   type InsertAboutContent,
+  type RepertoireItem,
+  type InsertRepertoireItem,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, asc } from "drizzle-orm";
@@ -64,6 +67,13 @@ export interface IStorage {
   // About content operations
   getAboutContent(): Promise<AboutContent | undefined>;
   upsertAboutContent(content: InsertAboutContent): Promise<AboutContent>;
+  
+  // Repertoire operations
+  getAllRepertoireItems(): Promise<RepertoireItem[]>;
+  getRepertoireItemsByCategory(category: string): Promise<RepertoireItem[]>;
+  createRepertoireItem(item: InsertRepertoireItem): Promise<RepertoireItem>;
+  updateRepertoireItem(id: string, item: Partial<InsertRepertoireItem>): Promise<RepertoireItem>;
+  deleteRepertoireItem(id: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -225,6 +235,35 @@ export class DatabaseStorage implements IStorage {
       })
       .returning();
     return content;
+  }
+
+  // Repertoire operations
+  async getAllRepertoireItems(): Promise<RepertoireItem[]> {
+    return db.select().from(repertoireItems).orderBy(asc(repertoireItems.category), asc(repertoireItems.order));
+  }
+
+  async getRepertoireItemsByCategory(category: string): Promise<RepertoireItem[]> {
+    return db.select().from(repertoireItems)
+      .where(eq(repertoireItems.category, category))
+      .orderBy(asc(repertoireItems.order));
+  }
+
+  async createRepertoireItem(item: InsertRepertoireItem): Promise<RepertoireItem> {
+    const [newItem] = await db.insert(repertoireItems).values(item).returning();
+    return newItem;
+  }
+
+  async updateRepertoireItem(id: string, itemData: Partial<InsertRepertoireItem>): Promise<RepertoireItem> {
+    const [item] = await db
+      .update(repertoireItems)
+      .set(itemData)
+      .where(eq(repertoireItems.id, id))
+      .returning();
+    return item;
+  }
+
+  async deleteRepertoireItem(id: string): Promise<void> {
+    await db.delete(repertoireItems).where(eq(repertoireItems.id, id));
   }
 }
 
