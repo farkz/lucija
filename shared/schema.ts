@@ -52,6 +52,7 @@ export const events = pgTable("events", {
   date: varchar("date").notNull(),
   venue: text("venue").notNull(),
   orchestra: text("orchestra").notNull(),
+  description: text("description"),
   isPast: boolean("is_past").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });

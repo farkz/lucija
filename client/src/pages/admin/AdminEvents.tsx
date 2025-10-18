@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Switch } from "@/components/ui/switch";
@@ -27,6 +28,7 @@ export default function AdminEvents() {
   const [date, setDate] = useState("");
   const [venue, setVenue] = useState("");
   const [orchestra, setOrchestra] = useState("");
+  const [description, setDescription] = useState("");
   const [isPast, setIsPast] = useState(false);
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
@@ -35,7 +37,7 @@ export default function AdminEvents() {
   });
 
   const createMutation = useMutation({
-    mutationFn: async (data: { date: string; venue: string; orchestra: string; isPast: boolean }) => {
+    mutationFn: async (data: { date: string; venue: string; orchestra: string; description?: string; isPast: boolean }) => {
       const response = await apiRequest("POST", "/api/admin/events", data);
       return response.json();
     },
@@ -137,6 +139,7 @@ export default function AdminEvents() {
     setDate("");
     setVenue("");
     setOrchestra("");
+    setDescription("");
     setIsPast(false);
     setUploadedImages([]);
     setEditingEvent(null);
@@ -148,6 +151,7 @@ export default function AdminEvents() {
       setDate(event.date);
       setVenue(event.venue);
       setOrchestra(event.orchestra);
+      setDescription(event.description || "");
       setIsPast(event.isPast);
       setUploadedImages(event.images || []);
     } else {
@@ -166,7 +170,7 @@ export default function AdminEvents() {
       return;
     }
 
-    const data = { date, venue, orchestra, isPast };
+    const data = { date, venue, orchestra, description: description || undefined, isPast };
 
     if (editingEvent) {
       updateMutation.mutate({ id: editingEvent.id, data });
@@ -277,6 +281,16 @@ export default function AdminEvents() {
                   value={orchestra}
                   onChange={(e) => setOrchestra(e.target.value)}
                   data-testid="input-orchestra"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-2 block">Description (optional)</label>
+                <Textarea
+                  placeholder="Short description of the event"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  data-testid="textarea-description"
+                  rows={3}
                 />
               </div>
               <div className="flex items-center gap-2">

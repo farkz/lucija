@@ -6,6 +6,7 @@ export interface Event {
   date: string;
   venue: string;
   orchestra: string;
+  description?: string | null;
   images: string[];
 }
 
@@ -29,6 +30,11 @@ export default function EventCard({ event, onImageClick }: EventCardProps) {
           <Music className="w-4 h-4" />
           <span data-testid={`text-event-orchestra-${event.id}`}>{event.orchestra}</span>
         </div>
+        {event.description && (
+          <p className="text-sm text-muted-foreground mt-2" data-testid={`text-event-description-${event.id}`}>
+            {event.description}
+          </p>
+        )}
       </div>
 
       {event.images && event.images.length > 0 && (
