@@ -1,8 +1,12 @@
+import { StructuredData, generateVideoSchema } from "@/lib/structuredData";
+
 export interface YouTubeVideo {
   id: string;
   title: string;
   videoId: string;
   thumbnailUrl: string;
+  createdAt?: Date | string;
+  order?: number;
 }
 
 interface YouTubeGalleryProps {
@@ -12,6 +16,17 @@ interface YouTubeGalleryProps {
 export default function YouTubeGallery({ videos }: YouTubeGalleryProps) {
   return (
     <section id="gallery" className="px-6 py-12 bg-card" data-testid="section-gallery">
+      {/* Structured Data for SEO */}
+      {videos.map((video) => (
+        <StructuredData
+          key={video.id}
+          data={generateVideoSchema({
+            ...video,
+            createdAt: video.createdAt || new Date().toISOString(),
+            order: video.order || 0
+          })}
+        />
+      ))}
       <div className="max-w-2xl mx-auto">
         <h2 className="font-serif text-2xl font-light mb-6" data-testid="text-gallery-heading">
           Archive / YouTube Gallery

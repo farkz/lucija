@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import { useState } from "react";
 import MobileMenu from "@/components/MobileMenu";
+import { StructuredData, generateBlogPostSchema } from "@/lib/structuredData";
 
 interface BlogPost {
   id: string;
@@ -14,6 +15,7 @@ interface BlogPost {
   imageUrl: string | null;
   published: boolean;
   createdAt: Date | string;
+  updatedAt: Date | string | null;
 }
 
 export default function BlogPost() {
@@ -45,6 +47,9 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen">
+      {/* Structured Data for SEO */}
+      <StructuredData data={generateBlogPostSchema(post)} />
+      
       <Header isMenuOpen={isMenuOpen} onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       

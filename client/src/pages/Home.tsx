@@ -10,6 +10,7 @@ import BlogSection, { type BlogPost } from "@/components/BlogSection";
 import ImageModal from "@/components/ImageModal";
 import heroImage from "@assets/lu_1760791781256.jpg";
 import { SiInstagram } from "react-icons/si";
+import { StructuredData, generateOrganizationSchema, generatePersonSchema, generateEventSchema } from "@/lib/structuredData";
 
 interface Review {
   id: string;
@@ -29,7 +30,9 @@ interface EventWithImages {
   date: string;
   venue: string;
   orchestra: string;
+  description: string | null;
   isPast: boolean;
+  createdAt: Date | null;
   images: string[];
 }
 
@@ -75,6 +78,13 @@ Her repertoire spans from baroque to contemporary opera, with particular acclaim
 
   return (
     <div className="min-h-screen">
+      {/* Structured Data for SEO */}
+      <StructuredData data={generateOrganizationSchema()} />
+      <StructuredData data={generatePersonSchema()} />
+      {upcomingEvents.slice(0, 5).map((event) => (
+        <StructuredData key={event.id} data={generateEventSchema(event)} />
+      ))}
+      
       <Header isMenuOpen={isMenuOpen} onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       
