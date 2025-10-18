@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Calendar, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
+import SEO from "@/components/SEO";
 import { useState } from "react";
 import MobileMenu from "@/components/MobileMenu";
 import { StructuredData, generateBlogPostSchema } from "@/lib/structuredData";
@@ -45,8 +46,21 @@ export default function BlogPost() {
     );
   }
 
+  const excerpt = post.excerpt || post.content.substring(0, 160);
+  const ogImage = post.imageUrl || "https://lucijaercegovac.com/og-image.jpg";
+
   return (
     <div className="min-h-screen">
+      <SEO
+        title={`${post.title} - Lucija Ercegovac Blog`}
+        description={excerpt}
+        keywords={`Lucija Ercegovac, opera blog, mezzo-soprano, ${post.title}`}
+        ogTitle={post.title}
+        ogDescription={excerpt}
+        ogImage={ogImage}
+        ogUrl={`https://lucijaercegovac.com/blog/${post.id}`}
+      />
+      
       {/* Structured Data for SEO */}
       <StructuredData data={generateBlogPostSchema(post)} />
       

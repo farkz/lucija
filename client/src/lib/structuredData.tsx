@@ -247,6 +247,74 @@ export function generateOrganizationSchema() {
 }
 
 /**
+ * Generate MusicComposition schema for repertoire pieces
+ * https://schema.org/MusicComposition
+ */
+export function generateMusicCompositionSchema(
+  name: string,
+  composer: string,
+  musicCompositionForm?: string
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "MusicComposition",
+    "name": name,
+    "composer": {
+      "@type": "Person",
+      "name": composer
+    },
+    ...(musicCompositionForm && {
+      "musicCompositionForm": musicCompositionForm
+    })
+  };
+}
+
+/**
+ * Generate comprehensive repertoire structured data
+ * Creates an ItemList of MusicComposition objects
+ */
+export function generateRepertoireSchema() {
+  const compositions = [
+    { name: "Die Walküre", composer: "Richard Wagner", form: "Opera" },
+    { name: "Die Zauberflöte", composer: "Wolfgang Amadeus Mozart", form: "Opera" },
+    { name: "Iolanta", composer: "Pyotr Ilyich Tchaikovsky", form: "Opera" },
+    { name: "L'Enfant et les sortilèges", composer: "Maurice Ravel", form: "Opera" },
+    { name: "La vie parisienne", composer: "Jacques Offenbach", form: "Opera" },
+    { name: "Cendrillon", composer: "Jules Massenet", form: "Opera" },
+    { name: "Symphony No. 9", composer: "Ludwig van Beethoven", form: "Symphony" },
+    { name: "Carmina Burana", composer: "Carl Orff", form: "Cantata" },
+    { name: "Ein deutsches Requiem", composer: "Johannes Brahms", form: "Requiem" },
+    { name: "A Midsummer Night's Dream", composer: "Felix Mendelssohn", form: "Incidental Music" },
+    { name: "Les noces", composer: "Igor Stravinsky", form: "Ballet" },
+    { name: "Tancredi", composer: "Gioachino Rossini", form: "Opera" },
+    { name: "Il barbiere di Siviglia", composer: "Gioachino Rossini", form: "Opera" }
+  ];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Lucija Ercegovac Repertoire",
+    "description": "Complete repertoire of mezzo-soprano Lucija Ercegovac including opera roles and concert performances",
+    "numberOfItems": compositions.length,
+    "itemListElement": compositions.map((comp, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "MusicComposition",
+        "name": comp.name,
+        "composer": {
+          "@type": "Person",
+          "name": comp.composer
+        },
+        ...(comp.form && {
+          "musicCompositionForm": comp.form
+        })
+      }
+    }))
+  };
+}
+
+/**
  * Component to inject JSON-LD structured data into page head
  */
 export function StructuredData({ data }: { data: Record<string, any> }) {

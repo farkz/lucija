@@ -1,5 +1,7 @@
 import Header from "@/components/Header";
 import MobileMenu from "@/components/MobileMenu";
+import SEO from "@/components/SEO";
+import { StructuredData, generateRepertoireSchema } from "@/lib/structuredData";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -161,6 +163,18 @@ export default function Repertoire() {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Repertoire - Lucija Ercegovac | Opera Roles & Concert Performances"
+        description="Comprehensive repertoire of mezzo-soprano Lucija Ercegovac. Opera roles including Wagner, Mozart, Tchaikovsky, Ravel. Collaborations with Paavo Järvi, Jonathan Nott, Jordi Savall, Philippe Herreweghe."
+        keywords="Lucija Ercegovac repertoire, opera roles, Wagner Walküre, Mozart Zauberflöte, mezzo-soprano performances, Paavo Järvi, Jonathan Nott, Jordi Savall, Tonhalle-Orchester Zürich, Opera Bern"
+        ogTitle="Repertoire - Lucija Ercegovac Mezzo-Soprano"
+        ogDescription="Opera roles and concert performances by Croatian mezzo-soprano Lucija Ercegovac. Collaborations with world-renowned conductors and orchestras."
+        ogUrl="https://lucijaercegovac.com/repertoire"
+      />
+      
+      {/* Structured Data for Repertoire */}
+      <StructuredData data={generateRepertoireSchema()} />
+      
       <Header isMenuOpen={isMenuOpen} onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       

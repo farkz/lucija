@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import MobileMenu from "@/components/MobileMenu";
+import SEO from "@/components/SEO";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import EventsSection from "@/components/EventsSection";
@@ -78,6 +79,8 @@ Her repertoire spans from baroque to contemporary opera, with particular acclaim
 
   return (
     <div className="min-h-screen">
+      <SEO />
+      
       {/* Structured Data for SEO */}
       <StructuredData data={generateOrganizationSchema()} />
       <StructuredData data={generatePersonSchema()} />
