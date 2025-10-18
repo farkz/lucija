@@ -9,6 +9,7 @@ import YouTubeGallery, { type YouTubeVideo } from "@/components/YouTubeGallery";
 import BlogSection, { type BlogPost } from "@/components/BlogSection";
 import ImageModal from "@/components/ImageModal";
 import heroImage from "@assets/lu_1760791781256.jpg";
+import { SiInstagram } from "react-icons/si";
 
 interface Review {
   id: string;
@@ -95,6 +96,24 @@ Her repertoire spans from baroque to contemporary opera, with particular acclaim
         <YouTubeGallery videos={youtubeVideos} />
         <BlogSection posts={blogPosts} />
       </main>
+
+      <footer className="border-t py-8 px-6">
+        <div className="max-w-2xl mx-auto flex flex-col items-center gap-4">
+          <a
+            href="https://instagram.com/luercegovac"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover-elevate active-elevate-2 p-3 rounded-md transition-colors"
+            aria-label="Follow Lucija Ercegovac on Instagram"
+            data-testid="link-instagram"
+          >
+            <SiInstagram className="w-6 h-6" />
+          </a>
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Lucija Ercegovac. All rights reserved.
+          </p>
+        </div>
+      </footer>
 
       <ImageModal imageUrl={selectedImage} onClose={() => setSelectedImage(null)} />
     </div>
