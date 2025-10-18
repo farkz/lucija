@@ -27,7 +27,7 @@ export default function AdminVideos() {
   });
 
   const createMutation = useMutation({
-    mutationFn: async (data: { title: string; videoId: string; thumbnailUrl: string; order: string }) => {
+    mutationFn: async (data: { title: string; videoId: string; thumbnailUrl: string; order: number }) => {
       await apiRequest("POST", "/api/admin/videos", data);
     },
     onSuccess: () => {
@@ -100,7 +100,18 @@ export default function AdminVideos() {
       });
       return;
     }
-    createMutation.mutate({ title, videoId, thumbnailUrl, order });
+    
+    const orderNumber = parseInt(order, 10);
+    if (isNaN(orderNumber)) {
+      toast({
+        title: "Validation Error",
+        description: "Order must be a valid number.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    createMutation.mutate({ title, videoId, thumbnailUrl, order: orderNumber });
   };
 
   const extractVideoId = (input: string) => {
@@ -214,6 +225,7 @@ export default function AdminVideos() {
               <div>
                 <label className="text-sm font-medium mb-2 block">Order</label>
                 <Input
+                  type="number"
                   placeholder="Display order (e.g., 1, 2, 3)"
                   value={order}
                   onChange={(e) => setOrder(e.target.value)}
