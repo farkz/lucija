@@ -66,18 +66,83 @@ export function generatePersonSchema() {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Lucija Ercegovac",
-    "jobTitle": "Opera Singer",
-    "description": "Professional opera singer performing at venues worldwide",
+    "jobTitle": "Mezzo-Soprano",
+    "description": "Croatian mezzo-soprano performing opera and concert repertoire across Europe. Collaborations with world-renowned conductors including Paavo Järvi, Jonathan Nott, and Jordi Savall.",
     "url": "https://lucijaercegovac.com",
-    "sameAs": [
-      "https://instagram.com/luercegovac"
+    "nationality": {
+      "@type": "Country",
+      "name": "Croatia"
+    },
+    "birthPlace": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "Croatia"
+      }
+    },
+    "alumniOf": [
+      {
+        "@type": "EducationalOrganization",
+        "name": "Swiss Opera Studio, Bern University of the Arts",
+        "location": "Bern, Switzerland"
+      },
+      {
+        "@type": "EducationalOrganization",
+        "name": "Music Academy of Zagreb",
+        "location": "Zagreb, Croatia"
+      },
+      {
+        "@type": "EducationalOrganization",
+        "name": "Internationale Bachakademie Stuttgart"
+      }
     ],
-    "knowsAbout": ["Opera", "Classical Music", "Vocal Performance"],
+    "sameAs": [
+      "https://instagram.com/luercegovac",
+      "https://www.muvac.com/en/profile/lucija-ercegovac",
+      "https://www.operabase.com/artists/lucija-ercegovac-2143716/en",
+      "https://open.spotify.com/artist/4VEgE1q8iN2YjY6YpDEKQ1"
+    ],
+    "knowsAbout": [
+      "Opera",
+      "Classical Music",
+      "Vocal Performance",
+      "Wagner",
+      "Mozart", 
+      "Verdi",
+      "Puccini",
+      "Brahms",
+      "Beethoven",
+      "Orff",
+      "Baroque Music"
+    ],
     "hasOccupation": {
       "@type": "Occupation",
-      "name": "Opera Singer",
-      "occupationalCategory": "Performing Arts"
-    }
+      "name": "Mezzo-Soprano",
+      "occupationalCategory": "Performing Arts",
+      "skills": "Opera, Concert Repertoire, Oratorio, Lieder"
+    },
+    "performerIn": [
+      {
+        "@type": "MusicGroup",
+        "name": "Opera Bern"
+      },
+      {
+        "@type": "MusicGroup", 
+        "name": "Tonhalle-Orchester Zürich"
+      },
+      {
+        "@type": "MusicGroup",
+        "name": "Orchestre de la Suisse Romande"
+      },
+      {
+        "@type": "MusicGroup",
+        "name": "Collegium Vocale Gent"
+      }
+    ],
+    "award": [
+      "Swiss Opera Studio Young Artist 2021-2023",
+      "Opera Bern Elevin 2022/23"
+    ]
   };
 }
 
