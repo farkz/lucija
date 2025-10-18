@@ -81,7 +81,21 @@ export default function AdminEvents() {
     mutationFn: async ({ id, data }: { id: string; data: Partial<Event> }) => {
       await apiRequest("PUT", `/api/admin/events/${id}`, data);
     },
-    onSuccess: () => {
+    onSuccess: async (_data, variables) => {
+      // Handle image updates
+      if (editingEvent && uploadedImages.length > 0) {
+        const existingImages = editingEvent.images || [];
+        const newImages = uploadedImages.filter(img => !existingImages.includes(img));
+        
+        // Add new images to event_images table
+        for (let i = 0; i < newImages.length; i++) {
+          await apiRequest("POST", "/api/admin/event-images", {
+            eventId: variables.id,
+            imageUrl: newImages[i],
+            order: existingImages.length + i + 1,
+          });
+        }
+      }
       queryClient.invalidateQueries({ queryKey: ["/api/admin/events"] });
       resetForm();
       setIsDialogOpen(false);
