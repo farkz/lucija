@@ -2,13 +2,33 @@ import Header from "@/components/Header";
 import MobileMenu from "@/components/MobileMenu";
 import SEO from "@/components/SEO";
 import { StructuredData, generateRepertoireSchema } from "@/lib/structuredData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { RepertoireItem } from "@shared/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
+// Utility function to create URL-friendly slugs
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 export default function Repertoire() {
+  // Scroll to anchor on page load if hash is present
+  useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.substring(1);
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+    }
+  }, []);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { data: repertoireItems = [], isLoading } = useQuery<RepertoireItem[]>({
@@ -62,7 +82,7 @@ export default function Repertoire() {
           </div>
 
           {/* Opera Roles */}
-          <section className="mb-16">
+          <section id="opera-roles" className="mb-16 scroll-mt-24">
             <h2 
               className="text-3xl font-light mb-6 tracking-wide" 
               style={{ fontFamily: 'var(--font-serif)' }}
@@ -78,20 +98,28 @@ export default function Repertoire() {
               <div className="grid gap-4 md:grid-cols-2">
                 {operaRoles
                   .sort((a, b) => a.order - b.order)
-                  .map((item) => (
-                    <Card key={item.id} data-testid={`card-opera-role-${item.id}`}>
-                      <CardHeader>
-                        <CardTitle className="text-xl font-medium">
-                          {item.title}
-                        </CardTitle>
-                      </CardHeader>
-                      {item.subtitle && (
-                        <CardContent>
-                          <p className="text-sm text-muted-foreground">{item.subtitle}</p>
-                        </CardContent>
-                      )}
-                    </Card>
-                  ))}
+                  .map((item) => {
+                    const anchorId = slugify(item.title);
+                    return (
+                      <Card 
+                        key={item.id} 
+                        id={anchorId}
+                        data-testid={`card-opera-role-${item.id}`}
+                        className="scroll-mt-24"
+                      >
+                        <CardHeader>
+                          <CardTitle className="text-xl font-medium">
+                            {item.title}
+                          </CardTitle>
+                        </CardHeader>
+                        {item.subtitle && (
+                          <CardContent>
+                            <p className="text-sm text-muted-foreground">{item.subtitle}</p>
+                          </CardContent>
+                        )}
+                      </Card>
+                    );
+                  })}
               </div>
             )}
           </section>
@@ -99,7 +127,7 @@ export default function Repertoire() {
           <Separator className="my-12" />
 
           {/* Concert & Oratorio Repertoire */}
-          <section className="mb-16">
+          <section id="concert-repertoire" className="mb-16 scroll-mt-24">
             <h2 
               className="text-3xl font-light mb-6 tracking-wide" 
               style={{ fontFamily: 'var(--font-serif)' }}
@@ -115,20 +143,28 @@ export default function Repertoire() {
               <div className="grid gap-4">
                 {concertRepertoire
                   .sort((a, b) => a.order - b.order)
-                  .map((item) => (
-                    <Card key={item.id} data-testid={`card-concert-${item.id}`}>
-                      <CardHeader>
-                        <CardTitle className="text-xl font-medium">
-                          {item.title}
-                        </CardTitle>
-                      </CardHeader>
-                      {item.subtitle && (
-                        <CardContent>
-                          <p className="text-sm text-muted-foreground">{item.subtitle}</p>
-                        </CardContent>
-                      )}
-                    </Card>
-                  ))}
+                  .map((item) => {
+                    const anchorId = slugify(item.title);
+                    return (
+                      <Card 
+                        key={item.id} 
+                        id={anchorId}
+                        data-testid={`card-concert-${item.id}`}
+                        className="scroll-mt-24"
+                      >
+                        <CardHeader>
+                          <CardTitle className="text-xl font-medium">
+                            {item.title}
+                          </CardTitle>
+                        </CardHeader>
+                        {item.subtitle && (
+                          <CardContent>
+                            <p className="text-sm text-muted-foreground">{item.subtitle}</p>
+                          </CardContent>
+                        )}
+                      </Card>
+                    );
+                  })}
               </div>
             )}
           </section>
@@ -138,7 +174,7 @@ export default function Repertoire() {
           {/* Collaborations Grid */}
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             {/* Conductors */}
-            <section>
+            <section id="conductors" className="scroll-mt-24">
               <h2 
                 className="text-3xl font-light mb-6 tracking-wide" 
                 style={{ fontFamily: 'var(--font-serif)' }}
@@ -169,7 +205,7 @@ export default function Repertoire() {
             </section>
 
             {/* Orchestras & Ensembles */}
-            <section>
+            <section id="orchestras" className="scroll-mt-24">
               <h2 
                 className="text-3xl font-light mb-6 tracking-wide" 
                 style={{ fontFamily: 'var(--font-serif)' }}
@@ -201,7 +237,7 @@ export default function Repertoire() {
           </div>
 
           {/* Performance Venues */}
-          <section>
+          <section id="venues" className="scroll-mt-24">
             <h2 
               className="text-3xl font-light mb-6 tracking-wide" 
               style={{ fontFamily: 'var(--font-serif)' }}
