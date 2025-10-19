@@ -56,12 +56,16 @@ export default function HeroSection({ imageSrc, reviews }: HeroSectionProps) {
             <button
               key={index}
               onClick={() => goToReview(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentReview ? "bg-primary w-6" : "bg-muted-foreground/40"
-              }`}
+              className="p-3 min-w-12 min-h-12 flex items-center justify-center"
               aria-label={`Go to review ${index + 1}`}
               data-testid={`button-review-dot-${index}`}
-            />
+            >
+              <span
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentReview ? "bg-primary w-6" : "bg-muted-foreground/40"
+                }`}
+              />
+            </button>
           ))}
         </div>
       </div>
