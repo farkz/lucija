@@ -1,5 +1,6 @@
 import { Calendar, MapPin, Music } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import ShareEventDialog from "./ShareEventDialog";
 
 export interface Event {
   id: string;
@@ -13,15 +14,19 @@ export interface Event {
 interface EventCardProps {
   event: Event;
   onImageClick: (imageUrl: string) => void;
+  showShareButton?: boolean;
 }
 
-export default function EventCard({ event, onImageClick }: EventCardProps) {
+export default function EventCard({ event, onImageClick, showShareButton = false }: EventCardProps) {
   return (
     <Card className="p-6 space-y-4" data-testid={`card-event-${event.id}`}>
       <div className="space-y-2">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Calendar className="w-4 h-4" />
-          <span data-testid={`text-event-date-${event.id}`}>{event.date}</span>
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Calendar className="w-4 h-4" />
+            <span data-testid={`text-event-date-${event.id}`}>{event.date}</span>
+          </div>
+          {showShareButton && <ShareEventDialog event={event} />}
         </div>
         <h3 className="font-medium text-lg" data-testid={`text-event-venue-${event.id}`}>
           {event.venue}

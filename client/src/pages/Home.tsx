@@ -105,6 +105,7 @@ Her repertoire spans from baroque to contemporary opera, with particular acclaim
           events={upcomingEvents}
           sectionId="upcoming"
           onImageClick={setSelectedImage}
+          showShareButton={true}
         />
         <EventsSection
           title="Past Events"

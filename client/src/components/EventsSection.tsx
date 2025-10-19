@@ -5,9 +5,10 @@ interface EventsSectionProps {
   events: Event[];
   onImageClick: (imageUrl: string) => void;
   sectionId: string;
+  showShareButton?: boolean;
 }
 
-export default function EventsSection({ title, events, onImageClick, sectionId }: EventsSectionProps) {
+export default function EventsSection({ title, events, onImageClick, sectionId, showShareButton = false }: EventsSectionProps) {
   return (
     <section id={sectionId} className="px-6 py-12" data-testid={`section-${sectionId}`}>
       <div className="max-w-2xl mx-auto">
@@ -21,7 +22,7 @@ export default function EventsSection({ title, events, onImageClick, sectionId }
         ) : (
           <div className="space-y-6">
             {events.map((event) => (
-              <EventCard key={event.id} event={event} onImageClick={onImageClick} />
+              <EventCard key={event.id} event={event} onImageClick={onImageClick} showShareButton={showShareButton} />
             ))}
           </div>
         )}
