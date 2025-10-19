@@ -10,7 +10,7 @@ const menuItems = [
   { label: "About Me", href: "#about", type: "scroll" as const },
   { label: "Upcoming Events", href: "#upcoming", type: "scroll" as const },
   { label: "Past Events", href: "#past-events", type: "scroll" as const },
-  { label: "Archive / YouTube Gallery", href: "#gallery", type: "scroll" as const },
+  { label: "Gallery/Videos", href: "#gallery", type: "scroll" as const },
   { label: "Repertoire", href: "/repertoire", type: "page" as const },
 ];
 
