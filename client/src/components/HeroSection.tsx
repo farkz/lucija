@@ -35,7 +35,7 @@ export default function HeroSection({ imageSrc, reviews }: HeroSectionProps) {
           alt="Lucija Ercegovac performing opera"
           className="w-full h-full object-cover"
           loading="eager"
-          fetchpriority="high"
+          fetchPriority="high"
           decoding="async"
           data-testid="img-hero"
         />
