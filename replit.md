@@ -30,6 +30,7 @@ Preferred communication style: Simple, everyday language.
 - Smooth scroll-based navigation with accessible hamburger menu
 - Typography using Google Fonts: Cormorant Garamond (serif display) and Inter (sans-serif body)
 - Minimalist aesthetic letting the artist's work take center stage
+- **Anchor-based deep linking** for repertoire items enabling direct sharing and SEO optimization
 
 **Component Structure**
 - Reusable UI components from shadcn/ui (buttons, cards, dialogs, forms, etc.)
