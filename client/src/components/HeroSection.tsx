@@ -41,7 +41,7 @@ export default function HeroSection({ imageSrc, reviews }: HeroSectionProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 backdrop-blur-lg bg-black/30 px-6 py-8">
+      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/70 to-transparent px-6 py-8">
         <div className="max-w-prose mx-auto">
           <blockquote className="text-lg italic text-foreground mb-2" data-testid="text-review-quote">
             "{reviews[currentReview]?.quote}"
