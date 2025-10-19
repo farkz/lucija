@@ -32,8 +32,11 @@ export default function HeroSection({ imageSrc, reviews }: HeroSectionProps) {
       <div className="absolute inset-0">
         <img
           src={imageSrc}
-          alt="Lucija Ercegovac"
+          alt="Lucija Ercegovac performing opera"
           className="w-full h-full object-cover"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
           data-testid="img-hero"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
