@@ -62,11 +62,11 @@ export default function BlogSection({ posts }: BlogSectionProps) {
                 </p>
               )}
               
-              <Link href={`/blog/${post.id}`}>
-                <Button variant="outline" size="sm" data-testid={`button-read-more-${post.id}`}>
+              <Button variant="outline" size="sm" asChild>
+                <Link href={`/blog/${post.id}`} data-testid={`link-read-more-${post.id}`}>
                   Read More
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </Card>
           ))}
         </div>
