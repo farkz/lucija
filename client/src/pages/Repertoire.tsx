@@ -40,7 +40,7 @@ export default function Repertoire() {
       />
       
       {/* Structured Data for Repertoire */}
-      <StructuredData data={generateRepertoireSchema()} />
+      <StructuredData data={generateRepertoireSchema(repertoireItems)} />
       
       <Header isMenuOpen={isMenuOpen} onMenuToggle={() => setIsMenuOpen(!isMenuOpen)} />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />

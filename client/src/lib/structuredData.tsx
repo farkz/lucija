@@ -272,24 +272,32 @@ export function generateMusicCompositionSchema(
 
 /**
  * Generate comprehensive repertoire structured data
- * Creates an ItemList of MusicComposition objects
+ * Creates an ItemList of MusicComposition objects from dynamic database data
  */
-export function generateRepertoireSchema() {
-  const compositions = [
-    { name: "Die Walküre", composer: "Richard Wagner", form: "Opera" },
-    { name: "Die Zauberflöte", composer: "Wolfgang Amadeus Mozart", form: "Opera" },
-    { name: "Iolanta", composer: "Pyotr Ilyich Tchaikovsky", form: "Opera" },
-    { name: "L'Enfant et les sortilèges", composer: "Maurice Ravel", form: "Opera" },
-    { name: "La vie parisienne", composer: "Jacques Offenbach", form: "Opera" },
-    { name: "Cendrillon", composer: "Jules Massenet", form: "Opera" },
-    { name: "Symphony No. 9", composer: "Ludwig van Beethoven", form: "Symphony" },
-    { name: "Carmina Burana", composer: "Carl Orff", form: "Cantata" },
-    { name: "Ein deutsches Requiem", composer: "Johannes Brahms", form: "Requiem" },
-    { name: "A Midsummer Night's Dream", composer: "Felix Mendelssohn", form: "Incidental Music" },
-    { name: "Les noces", composer: "Igor Stravinsky", form: "Ballet" },
-    { name: "Tancredi", composer: "Gioachino Rossini", form: "Opera" },
-    { name: "Il barbiere di Siviglia", composer: "Gioachino Rossini", form: "Opera" }
-  ];
+export function generateRepertoireSchema(repertoireItems?: Array<{ id: string; category: string; title: string; subtitle?: string | null; order: number; }>) {
+  // If no data provided, return empty schema
+  if (!repertoireItems || repertoireItems.length === 0) {
+    return {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Lucija Ercegovac Repertoire",
+      "description": "Complete repertoire of mezzo-soprano Lucija Ercegovac including opera roles and concert performances",
+      "numberOfItems": 0,
+      "itemListElement": []
+    };
+  }
+
+  // Filter only opera roles and concert works (exclude conductors, orchestras, venues)
+  const musicalWorks = repertoireItems.filter(
+    item => item.category === 'opera_role' || item.category === 'concert_work'
+  );
+
+  // Transform to compositions with composer extracted from subtitle
+  const compositions = musicalWorks.map(item => ({
+    name: item.title,
+    composer: item.subtitle || 'Unknown Composer',
+    form: item.category === 'opera_role' ? 'Opera' : 'Concert Work'
+  }));
 
   return {
     "@context": "https://schema.org",
