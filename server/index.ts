@@ -1,10 +1,41 @@
 import express, { type Request, Response, NextFunction } from "express";
+import compression from "compression";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+
+// Enable gzip/brotli compression for all responses
+app.use(compression({
+  level: 6, // Compression level (0-9, higher = better compression but slower)
+  threshold: 1024, // Only compress responses larger than 1KB
+  filter: (req: Request, res: Response) => {
+    // Don't compress if client doesn't accept encoding
+    if (req.headers['x-no-compression']) {
+      return false;
+    }
+    // Use compression filter function
+    return compression.filter(req, res);
+  }
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Set cache headers for static assets in production
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    // Cache static assets aggressively (JS, CSS, fonts, images with hashed names)
+    if (req.path.match(/\.(js|css|woff2?|ttf|eot|svg|png|jpg|jpeg|gif|webp|avif|ico)$/)) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+    // Don't cache HTML files aggressively
+    else if (req.path.endsWith('.html') || req.path === '/') {
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+    }
+    next();
+  });
+}
 
 app.use((req, res, next) => {
   const start = Date.now();
