@@ -1,0 +1,89 @@
+robots.txt is not valid 28 errors found
+If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. Learn more about robots.txt.
+Line #
+Content
+Error
+1
+<!DOCTYPE html>
+Syntax not understood
+2
+<html lang="en" class="dark">
+Syntax not understood
+3
+<head>
+Syntax not understood
+4
+<meta charset="UTF-8" />
+Syntax not understood
+5
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes" />
+Syntax not understood
+6
+<meta name="description" content="Croatian mezzo-soprano Lucija Ercegovac performs opera and concert repertoire across Europe. Collaborations with Paavo Järvi, Jonathan Nott, Jordi Savall. Opera Bern, Tonhalle Zürich." />
+Syntax not understood
+7
+<meta name="keywords" content="Lucija Ercegovac, mezzo-soprano, opera singer, Croatian opera, Opera Bern, Tonhalle Zürich, Wagner, Mozart, Verdi, Puccini, classical music Switzerland, opera performances" />
+Syntax not understood
+8
+<meta property="og:title" content="Lucija Ercegovac - Mezzo-Soprano | Opera & Concert Performances" />
+Unknown directive
+9
+<meta property="og:description" content="Croatian mezzo-soprano performing across Europe. Collaborations with world-renowned conductors including Paavo Järvi, Jonathan Nott, and Jordi Savall at major venues." />
+Unknown directive
+10
+<meta property="og:type" content="website" />
+Unknown directive
+11
+<meta property="og:url" content="https://lucijaercegovac.com" />
+Unknown directive
+12
+<meta name="twitter:card" content="summary_large_image" />
+Unknown directive
+13
+<meta name="twitter:title" content="Lucija Ercegovac - Mezzo-Soprano" />
+Unknown directive
+14
+<meta name="twitter:description" content="Croatian mezzo-soprano performing opera and concert repertoire across Europe's leading venues." />
+Unknown directive
+15
+<title>Lucija Ercegovac - Mezzo-Soprano | Opera & Concert Performances</title>
+Syntax not understood
+16
+<link rel="preconnect" href="https://fonts.googleapis.com">
+Unknown directive
+17
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+Unknown directive
+18
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+Unknown directive
+19
+<!-- Preload critical fonts for faster rendering -->
+Syntax not understood
+20
+<link rel="preload" href="https://fonts.gstatic.com/s/cormorantgaramond/v16/co3bmX5slCNuHLi8bLeY9MK7whWMhyjQEl1Eyy4.woff2" as="font" type="font/woff2" crossorigin>
+Unknown directive
+21
+<link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" as="font" type="font/woff2" crossorigin>
+Unknown directive
+22
+<script type="module" crossorigin src="/assets/index-CDi6Pdys.js"></script>
+Syntax not understood
+23
+<link rel="stylesheet" crossorigin href="/assets/index-BNgP1rE7.css">
+Syntax not understood
+24
+</head>
+Syntax not understood
+25
+<body>
+Syntax not understood
+26
+<div id="root"></div>
+Syntax not understood
+27
+</body>
+Syntax not understood
+28
+</html>
+Syntax not understood
