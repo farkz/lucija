@@ -39,9 +39,9 @@ export default function BlogPost() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <p className="text-muted-foreground">Blog post not found</p>
-        <Link href="/">
-          <Button variant="outline">Go Home</Button>
-        </Link>
+        <Button variant="outline" asChild>
+          <Link href="/">Go Home</Link>
+        </Button>
       </div>
     );
   }
@@ -69,12 +69,12 @@ export default function BlogPost() {
       <main className="pt-16">
         <article className="px-6 py-12" data-testid="article-blog-post">
           <div className="max-w-prose mx-auto">
-            <Link href="/">
-              <Button variant="ghost" className="mb-6" data-testid="button-back">
+            <Button variant="ghost" className="mb-6" asChild>
+              <Link href="/" data-testid="link-back">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back
-              </Button>
-            </Link>
+              </Link>
+            </Button>
 
             {post.imageUrl && (
               <div className="aspect-video rounded-lg overflow-hidden mb-6">
