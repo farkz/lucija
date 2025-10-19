@@ -10,7 +10,7 @@ import EventsSection from "@/components/EventsSection";
 import YouTubeGallery, { type YouTubeVideo } from "@/components/YouTubeGallery";
 import BlogSection, { type BlogPost } from "@/components/BlogSection";
 import ImageModal from "@/components/ImageModal";
-import heroImage from "@assets/lu_1760791781256.jpg";
+import heroImage from "@assets/hero-lucija.jpg";
 import { SiInstagram } from "react-icons/si";
 import { StructuredData, generateOrganizationSchema, generatePersonSchema, generateEventSchema } from "@/lib/structuredData";
 
