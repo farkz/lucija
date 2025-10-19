@@ -18,7 +18,7 @@ interface ShareEventDialogProps {
 export default function ShareEventDialog({ event }: ShareEventDialogProps) {
   const [copied, setCopied] = useState(false);
 
-  const shareUrl = `${window.location.origin}/#upcoming-events`;
+  const shareUrl = `${window.location.origin}/#upcoming`;
   const shareText = `${event.venue} - ${event.date}\n${event.orchestra}`;
 
   const handleNativeShare = async () => {
