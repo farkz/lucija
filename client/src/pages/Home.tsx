@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import MobileMenu from "@/components/MobileMenu";
 import SEO from "@/components/SEO";
@@ -80,6 +81,11 @@ Her repertoire spans from baroque to contemporary opera, with particular acclaim
   return (
     <div className="min-h-screen">
       <SEO />
+      
+      {/* Preload critical hero image for faster LCP */}
+      <Helmet>
+        <link rel="preload" as="image" href={heroImage} fetchPriority="high" />
+      </Helmet>
       
       {/* Structured Data for SEO */}
       <StructuredData data={generateOrganizationSchema()} />
